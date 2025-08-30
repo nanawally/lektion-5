@@ -1,0 +1,17 @@
+services:
+  app:
+    image: my-spring-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - unit_test
+
+  unit_test:
+    image: gradle:8.7-jdk21
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: ./gradlew unit_test
